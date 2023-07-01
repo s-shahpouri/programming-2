@@ -51,7 +51,7 @@ class ServerHandler(SimpleHTTPRequestHandler):
         Year = self.path[6:]
 
         try:
-            '''Get the data for the given Year or range or 'all' and send the response'''
+
             if Year == 'all':
                 data = self.data_provider.get_data('all')
             elif Year.isdigit():
