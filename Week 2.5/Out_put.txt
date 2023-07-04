@@ -1,0 +1,50 @@
+zshahpouri@assemblix2019:/data/dataprocessing/interproscan$ python3 /homes/zshahpouri/shahpouri_file/dask2.py
+Number of distinct protein annotations: 9704
+Average number of annotations per protein: 11.490521651120169
+Most common GO Term: 0    Phobius
+Name: TIGRFAM, dtype: object
+Average size of InterPRO feature: 408.18918485260406
+Top 10 most common InterPRO features:
+TIGR03882
+TRANSMEMBRANE              499821
+NON_CYTOPLASMIC_DOMAIN     321102
+CYTOPLASMIC_DOMAIN         311595
+Coil                        66988
+mobidb-lite                 54511
+SIGNAL_PEPTIDE_C_REGION     47745
+SIGNAL_PEPTIDE_N_REGION     47745
+SIGNAL_PEPTIDE              47745
+SIGNAL_PEPTIDE_H_REGION     47745
+G3DSA:3.40.50.300           24552
+Name: count, dtype: int64
+
+
+# 7 
+cyclo_dehyd_2: bacteriocin biosynthesis cyclodehydratase domain
+the               1771833
+of                1340391
+protein           1337056
+a                 1277398
+in                1139518
+to                1134306
+Region            1132886
+membrane-bound    1132633
+predicted         1132585
+be                1132518
+Name: count, dtype: int64
+
+
+# 8
+Top 10 least common words in annotation:
+cyclo_dehyd_2: bacteriocin biosynthesis cyclodehydratase domain
+PBP1_BMP-like        1
+YHJD                 1
+(BFN)                1
+(ABC1),              1
+(ABFB)               1
+(ACAB-1)             1
+(6-4)-PHOTOLYASE,    1
+(ACETOACETYL-COA     1
+LIPL45-RELATED       1
+LIPOLYTIC            1
+Name: count, dtype: int64
