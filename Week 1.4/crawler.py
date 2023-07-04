@@ -7,7 +7,10 @@ import re
 
 
 class Crawler:
+    '''Crawler class that crawls the website sport050.nl and extracts the'''
+
     def __init__(self):
+        '''Initializes the crawler class and sets the url, context, soup,'''
         self.url = "https://sport050.nl/sportaanbieders/alle-aanbieders/"
         self.ctx = self.hack_ssl()
         self.soup = self.open_url(self.url)
