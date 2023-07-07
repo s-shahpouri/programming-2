@@ -4,6 +4,8 @@
 This repository contains my work for the Advanced Programming course assignments. Each folder represents the work completed for a specific week. Here's a quick rundown of what each directory contains:
 
 ## Repository Structure
+
+- `Week 1.2/` SOLID principles assignment
 - `Week 1.2/`: Classes, objects, constructors, destructors, object lifecycle, and dunder methods.
 - `Week 1.3/`:  Multiple class interaction and modules.
 - `Week 1.4/`: List comprehensions, generators, and map-reduce.
