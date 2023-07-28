@@ -12,6 +12,9 @@ import time
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # My mail address and NCBI API Key
+# You should not have your email and api key in your repo;
+# it should be in a config file.
+
 Entrez.email = 'z.shahpouri@st.hanze.nl'
 Entrez.api_key = 'ecb9c4efe9d8dd7d8612093defaac6eca209'
 
