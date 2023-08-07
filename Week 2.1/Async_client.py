@@ -57,6 +57,7 @@ async def main():
         client.fetch_data("1991", calculate_average_month),
         #
         client.fetch_data(
+            # see my note at the server-side
             "http://localhost:8040/data/1991-2000", calculate_average_month)
     ]
     # wait for all tasks to complete
