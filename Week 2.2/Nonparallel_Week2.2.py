@@ -1,3 +1,7 @@
+# Good; it would have been better, though, if you had abstracted away
+# the code that is common for both experiments. In your present setup,
+# you have a lot of code duplication.
+
 import ssl
 from Bio import Entrez
 import time

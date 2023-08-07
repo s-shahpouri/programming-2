@@ -18,6 +18,7 @@ class Crawler:
         self.sub_urls = self.get_sub_urls(self.reflist)
         self.current = 0
 
+    # Good observeration that this method could be made static
     @staticmethod
     def hack_ssl():
         """ ignores the certificate errors"""
@@ -33,7 +34,9 @@ class Crawler:
         html = urllib.request.urlopen(url, context=self.ctx).read()
         soup = BeautifulSoup(html, 'html.parser')
         return soup
-
+    
+    # Good observation that all these methods could be made static. 
+    # It would even be better is you hade refactored them into their own scope.
     @staticmethod
     def read_hrefs(soup):
         """ get from soup object a list of anchor tags,
@@ -105,4 +108,6 @@ class Crawler:
             phone = self.get_phone(info)
             email = self.get_email(info)
             self.current += 1
+            # Shouldn't this be a yield? Now you are making the user of this 
+            # class responsible of maintaining the state.
             return f'{site} ; {phone} ; {email}'

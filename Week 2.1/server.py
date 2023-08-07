@@ -2,6 +2,8 @@ from http.server import SimpleHTTPRequestHandler
 import socketserver
 import pandas as pd
 
+# A bit confusing that you have a class DataProvider in a file called 
+# server.py, but sure.
 
 class DataProvider:
     '''This class reads the data from the csv file
@@ -12,7 +14,8 @@ class DataProvider:
         self.data = pd.read_csv(file_path)
         print(self.data.columns)
 
-    def get_data(self, Year):
+    def get_data(self, Year): # Do not capitalize parameters
+
         '''Returns the data in json format for the given Year or range or 'all'''
 
         if Year == 'all':
@@ -34,6 +37,8 @@ class DataProvider:
             else:
                 raise ValueError('No data available for the requested range.')
         else:
+            # This is actually a bad design decision; now you cannot make 
+            # a difference between no data found (404) and a wrong request (400)
             raise ValueError('Invalid input parameter.')
 
 
@@ -57,6 +62,12 @@ class ServerHandler(SimpleHTTPRequestHandler):
             elif Year.isdigit():
                 data = self.data_provider.get_data(int(Year))
             elif '-' in Year:
+                # This is incorrect
+                # The assignment states that a from-to request must be made
+                # in the form of /data/<from-year>/<to-year> – which is a common
+                # pattern. In your elaboration you require the user of your api
+                # to read your documentation to see that a request like that 
+                # has to make use of a hyphen.
                 from_Year, to_Year = map(int, Year.split('-'))
                 data = self.data_provider.get_data([from_Year, to_Year])
             else:
@@ -71,6 +82,10 @@ class ServerHandler(SimpleHTTPRequestHandler):
             self.wfile.write(bytes(data, 'utf-8'))
 
         except ValueError as e:
+            # See? Now you are always issueing a 400, while a 404 
+            # Should make more sense when no data is found for a 
+            # particular range of dates.
+
             # send the error response
             self.send_error(400, 'Bad Request: ' + str(e))
 
@@ -81,5 +96,6 @@ PORT = 8040
 http = socketserver.TCPServer(("", PORT), ServerHandler)
 
 # Start the server
+# Would be better is this was wrapped in a __name__=='__main__'
 print("serving at port", PORT)
 http.serve_forever()

@@ -1,3 +1,5 @@
+# Now it would actually be better to have done this in a Notebook 😎
+
 import dask.dataframe as dd
 import dask.array as da
 import numpy as np
@@ -16,6 +18,8 @@ if __name__ == '__main__':
 
     # 1- How many distinct protein annotations are found in the dataset?
     distinct_annotations = df['IPR022291'].nunique().compute()
+
+    # use formatted strings whenever possible.
     print("Number of distinct protein annotations:", distinct_annotations)
 
     # 2 How many annotations does a protein have on average?
