@@ -32,7 +32,7 @@ def fetch_article(article_id):
 
         # save the article into a file
         with open(f"{article_id}.txt", 'w') as file:
-            file.write(handle.read())
+            file.write(handle.read().decode('utf-8'))
     except Exception as e:
         print(f"An error occurred with article {article_id}: {e}")
 
