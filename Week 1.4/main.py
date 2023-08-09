@@ -1,13 +1,12 @@
 from crawler import Crawler
 
-
-def main():
-    # Create an instance of the Crawler class
+if __name__ == "__main__":
     crawler = Crawler()
-
-    # Call the crawl_site method
     crawler.crawl_site()
 
-
-if __name__ == "__main__":
-    main()
+    num_iterations = 5
+    for _ in range(num_iterations):
+        try:
+            print(str(next(crawler)))
+        except StopIteration:
+            break

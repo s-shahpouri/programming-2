@@ -8,7 +8,9 @@ import re
 
 class Crawler:
     def __init__(self):
-        pass
+        self.pointer = -1  # pointer
+        self.sub_urls = []  # Keep track
+        self.url = "https://sport050.nl/sportaanbieders/alle-aanbieders/"  # Define the URL
 
     @staticmethod
     def hack_ssl():
@@ -98,36 +100,30 @@ class Crawler:
 
     def crawl_site(self):
         print('fetch urls')
-        url = "https://sport050.nl/sportaanbieders/alle-aanbieders/"
-        s = self.open_url(url)
+        s = self.open_url(self.url)
         reflist = self.read_hrefs(s)
 
         print('getting sub-urls')
         # sub_urls = [s for s in filter(
         #     lambda x: '<a href="/sportaanbieders' in str(x), reflist)]
         # sub_urls = sub_urls[3:]
-        sub_urls = [
+        self.sub_urls = [
             s for s in reflist if '<a href="/sportaanbieders' in str(s)][3:]
 
-        print(f'{len(sub_urls)} sub-urls')
+    def __iter__(self):
+        return self
 
-        for sub in sub_urls:
-            try:
-                sub = self.extract(sub)
-                site = url[:-16] + sub
-                soup = self.open_url(site)
-                info = self.fetch_sidebar(soup)
-                info = self.read_li(info)
-                phone = self.get_phone(info)
-                phone = self.remove_html_tags(phone).strip()
-                email = self.get_email(info)
-                email = self.remove_html_tags(email).replace("/", "")
-                print(f'{site} ; {phone} ; {email}')
-            except Exception as e:
-                print(e)
-                exit()
-
-
-# Create an instance of the Crawler class and call the crawl_site method
-crawler = Crawler()
-crawler.crawl_site()
+    def __next__(self):
+        self.pointer += 1
+        if self.pointer >= len(self.sub_urls):
+            raise StopIteration
+        sub = self.extract(self.sub_urls[self.pointer])
+        site = self.url[:-16] + sub
+        soup = self.open_url(site)
+        info = self.fetch_sidebar(soup)
+        info = self.read_li(info)
+        phone = self.get_phone(info)
+        phone = self.remove_html_tags(phone).strip()
+        email = self.get_email(info)
+        email = self.remove_html_tags(email).replace("/", "")
+        return f'{site} ; {phone} ; {email}'
