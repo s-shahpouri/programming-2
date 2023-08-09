@@ -1,0 +1,27 @@
+Refactoring Candidates:
+
+Separation of Concerns:
+Dividing the Crawler class into smaller,
+more focused classes or methods, each responsible
+for a specific task (e.g., URL fetching, HTML parsing, data extraction).
+
+Abstraction: Creating interfaces or abstract classes for the various components,
+allowing the Crawler class to interact with abstractions.
+
+Dependency Injection:
+Instead of hardcoding dependencies, using dependency injection to provide
+these dependencies to the Crawler class.
+This improves testability and flexibility.
+
+Error Handling:
+Implement more comprehensive error handling and reporting mechanisms,
+especially within the crawl_site method,
+to handle various exceptions that might occur during crawling.
+
+Logging:
+Integrate logging mechanisms to track and document the crawling process, errors,
+and progress.
+
+Configuration:
+Externalize configuration options (e.g., URL, number of iterations)
+into a separate configuration file or class to make the code more adaptable.
