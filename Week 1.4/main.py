@@ -2,9 +2,11 @@ from crawler import Crawler
 
 
 def main():
+    # Create an instance of the Crawler class
     crawler = Crawler()
-    for x in range(5):
-        print(str(next(crawler)))
+
+    # Call the crawl_site method
+    crawler.crawl_site()
 
 
 if __name__ == "__main__":
