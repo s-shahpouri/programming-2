@@ -61,8 +61,9 @@ class Reader:
             return ''
 
 
-# Example usage
-red = Reader('C:\zshahpouri\programming 2\config.yml')
-print(red.get_lines())  # Returns lines 2-6 as JSON
-print(red.get_lines())  # Returns lines 7-11 as JSON
-print(red.get_lines())  # Returns lines 12-16 as JSON
+if __name__ == "__main__":
+    # Example usage
+    red = Reader('C:\zshahpouri\programming 2\config.yml')
+    print(red.get_lines())  # Returns lines 2-6 as JSON
+    print(red.get_lines())  # Returns lines 7-11 as JSON
+    print(red.get_lines())  # Returns lines 12-16 as JSON
