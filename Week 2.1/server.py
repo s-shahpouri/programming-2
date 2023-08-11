@@ -50,20 +50,54 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
 # Step 3: Create and run the server
-PORT = 8040
-Handler = CustomRequestHandler
-httpd = socketserver.TCPServer(("", PORT), Handler)
+def find_available_port(start_port, end_port):
+    for port in range(start_port, end_port + 1):
+        try:
+            httpd = socketserver.TCPServer(("", port), CustomRequestHandler)
+            return httpd, port
+        except OSError:  # Port is busy
+            continue
+    return None, None
+
+
+def print_available_links(port):
+    print("Server is running at port", port)
+    print("Available links:")
+    print(f"http://localhost:{port}/data/all")
+    print(f"http://localhost:{port}/data/1991")
+    print(f"http://localhost:{port}/data/1991/2000")
+    print(f"http://localhost:{port}/data/1991/2000/2020")
+
+
 if __name__ == "__main__":
+    start_port = 8000
+    end_port = 8080
+    httpd, port = find_available_port(start_port, end_port)
 
-    print("serving at port", PORT)
+    if httpd:
+        print("Serving at port", port)
+        print("Server is running at port", port)
+        print("Available links:")
+        print(f"http://localhost:{port}/data/all")
+        print(f"http://localhost:{port}/data/1991")
+        print(f"http://localhost:{port}/data/1991/2000")
 
-    d = DataProvider()
-    # Test case 1: Get all data
-    print(d.get_data())
+        # Create an instance of the DataProvider class
+        d = DataProvider()
 
-    # Test case 2: Get data for a specific year (e.g., 1991)
-    print(d.get_data(1991))
+        # # Test case 1: Get all data
+        # print("Test case 1: Get all data")
+        # print(d.get_data())
 
-    # Test case 3: Get data for a range of years (e.g., from 1991 to 2000)
-    print(d.get_data([1991, 2000]))
-    httpd.serve_forever()
+        # # Test case 2: Get data for a specific year (e.g., 1991)
+        # print("Test case 2: Get data for a specific year (e.g., 1991)")
+        # print(d.get_data(1991))
+
+        # # Test case 3: Get data for a range of years (e.g., from 1991 to 2000)
+        # print("Test case 3: Get data for a range of years (e.g., from 1991 to 2000)")
+        # print(d.get_data([1991, 2000]))
+
+        # Start serving the HTTP requests
+        httpd.serve_forever()
+    else:
+        print("No available ports in the range", start_port, "to", end_port)
