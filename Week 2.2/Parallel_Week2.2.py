@@ -6,17 +6,22 @@ from Bio import Entrez
 import multiprocessing as mp
 import os
 import time
+import yaml
+
+
+def load_config(file_path):
+    with open(file_path, 'r') as config_file:
+        config = yaml.safe_load(config_file)
+    return config
+
+
+config = load_config('config.yml')
+Entrez.email = config['email']
+Entrez.api_key = config['api_key']
 
 
 # This is required to avoid SSL error
 ssl._create_default_https_context = ssl._create_unverified_context
-
-# My mail address and NCBI API Key
-# You should not have your email and api key in your repo;
-# it should be in a config file.
-
-Entrez.email = 'z.shahpouri@st.hanze.nl'
-Entrez.api_key = 'ecb9c4efe9d8dd7d8612093defaac6eca209'
 
 
 def fetch_article(article_id):
@@ -40,7 +45,7 @@ def fetch_article(article_id):
         print(f"An error occurred with article {article_id}: {e}")
 
 
-def download_articles(pubmed_id):
+def download_articles(pubmed_id, parallel):
     ''' Downloads the first ten articles that cite the given pubmed id'''
     try:
         # Get the articles that cite the given pubmed id
@@ -56,15 +61,13 @@ def download_articles(pubmed_id):
                       ["LinkSetDb"][0]["Link"]]  # Convert to strings
 
         # download the first ten articles in parallel
-        start_time = time.time()
-        with mp.Pool(10) as p:  # the Pool size: 10 for 10 parallel processes
 
-            # Download the first ten articles
-            p.map(fetch_article, references[:10])
-        end_time = time.time()
-
-        execution_time = end_time - start_time
-        print(f"Execution time: {execution_time} seconds")
+        if parallel:
+            with mp.Pool(10) as p:  # the Pool size: 10 for 10 parallel processes
+                p.map(fetch_article, references[:10])
+        else:
+            for article_id in references[:10]:
+                fetch_article(article_id)
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -75,8 +78,20 @@ pubmed_id = "30049270"
 
 
 def main():
+    start_time = time.time()
     print(f"Processing article {pubmed_id}...")
-    download_articles(pubmed_id)
+    method = input("Choose method (1 for parallel, 2 for non-parallel): ")
+
+    if method == "1":
+        download_articles(pubmed_id, parallel=True)
+    elif method == "2":
+        download_articles(pubmed_id, parallel=False)
+    else:
+        print("Invalid choice. Please choose 1 for parallel or 2 for non-parallel.")
+    end_time = time.time()
+
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time} seconds")
 
 
 if __name__ == "__main__":
