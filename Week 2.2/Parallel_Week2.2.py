@@ -8,6 +8,7 @@ import os
 import time
 import yaml
 
+# Yup, much better
 
 def load_config(file_path):
     with open(file_path, 'r') as config_file:
@@ -96,3 +97,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# did you notice any differences in performance?

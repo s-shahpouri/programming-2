@@ -50,6 +50,8 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
 # Step 3: Create and run the server
+# ok, this is nice (though you would need to find a way to communicate
+# the found port to the clients...)
 def find_available_port(start_port, end_port):
     for port in range(start_port, end_port + 1):
         try:
@@ -100,4 +102,5 @@ if __name__ == "__main__":
         # Start serving the HTTP requests
         httpd.serve_forever()
     else:
+        # use formatted strings when you want to print strings with variables.
         print("No available ports in the range", start_port, "to", end_port)
